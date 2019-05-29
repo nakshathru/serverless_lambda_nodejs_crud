@@ -1,0 +1,65 @@
+
+service: product-service-lambda 
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: us-east-1
+  stage: dev
+
+
+functions:
+  create:
+    handler: handler.create
+    events:
+      - http:
+          path: product
+          method: post
+          cors: true
+  readAll:
+    handler: handler.readAll
+    events:
+      - http:
+          path: product
+          method: get
+          cors: true
+  readSingle:
+    handler: handler.readSingle
+    events:
+      - http:
+          path: product/{id}
+          method: get
+          cors: true
+  update:
+    handler: handler.update
+    events:
+      - http:
+          path: product/{id}
+          method: put
+          cors: true
+  delete:
+    handler: handler.delete
+    events:
+      - http:
+          path: product/{id}
+          method: delete
+          cors: true
+          
+  writeFileDB:
+    handler: handler.fileWriteDB
+    events:
+      - http:
+          path: filedb
+          method: post
+          cors: true
+
+  writeFileS3:
+    handler: handler.fileWriteS3
+    events:
+      - http:
+          path: files3
+          method: post
+          cors: true
+
+plugins:
+  - serverless-offline
